@@ -20,7 +20,6 @@ public class Dummy {
 
         System.out.println(stream.hasMoreInstances());
 
-//        Queue<Integer> q = new LinkedList<Integer>();
         learner.setModelContext(stream.getHeader());
         learner.prepareForUse();
         int i = 5;
@@ -40,9 +39,8 @@ public class Dummy {
 
 class Informer extends Thread {
     public void run() {
-        while(Dummy.q.isEmpty()) {
-            System.out.println("empty");
+        while(true) {
+
         }
-        Dummy.q.remove();
     }
 }
