@@ -23,7 +23,7 @@ public class ClusKernel extends CFCluster{
      * the cluster irrelevant and we can delete it.
      */
 
-    private double totalN;
+    public double totalN;
 
     /**
      * A constructor that makes a Kernel which just represents the given point.
@@ -137,7 +137,7 @@ public class ClusKernel extends CFCluster{
      * Returns the weighted number of points in the cluster.
      * @return The weighted number of points in the cluster.
      */
-    private double getTotalN() {
+    public double getTotalN() {
         return totalN;
     }
 

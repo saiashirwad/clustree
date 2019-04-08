@@ -3,9 +3,10 @@ package clustree;
 import java.util.ArrayList;
 
 import java.util.LinkedList;
+import java.util.Queue;
+
 import moa.clusterers.clustree.util.*;
 import moa.cluster.Clustering;
-import moa.clusterers.AbstractClusterer;
 import moa.core.Measurement;
 import com.github.javacliparser.IntOption;
 import com.github.javacliparser.FlagOption;
@@ -39,7 +40,17 @@ public class ClusTree extends AbstractClusterer{
     /**
      * The root node of the tree.
      */
-    protected Node root;
+    public Node root;
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public Node realRoot;
+
+    public Node getRealRoot() {
+        return realRoot;
+    }
     // Information about the data represented in this tree.
     /**
      * Dimensionality of the data points managed by this tree.
@@ -49,6 +60,10 @@ public class ClusTree extends AbstractClusterer{
      * Parameter for the weighting function use to weight the entries.
      */
     protected double negLambda;
+
+    public double getNegLambda() {
+        return negLambda;
+    }
     /**
      * The current height of the tree. Should always be smaller than maxHeight.
      */
@@ -66,6 +81,7 @@ public class ClusTree extends AbstractClusterer{
      * The threshold for the weighting of an Entry. An Entry is irrelevant, if
      * it is in a leaf and the weightedN of the data Cluster is smaller than
      * this threshold.
+     *
      * @see Entry#data
      */
     private double weightThreshold = 0.05;
@@ -75,20 +91,49 @@ public class ClusTree extends AbstractClusterer{
     private int numberInsertions;
     private long timestamp;
 
+    public long getTimeStamp() {
+        return this.timestamp;
+    }
+
     /**
      * Parameter to determine wich strategy to use
      */
     protected boolean breadthFirstStrat = false;
 
+
+    public void traverse() {
+        System.out.println(height);
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.remove();
+
+            try {
+                for (Entry e: temp.getEntries()) {
+                    queue.add(e.getChild());
+                }
+            }
+            catch (Exception e) {
+                continue;
+            }
+        }
+    }
+
     //TODO: cleanup
     private Entry alsoUpdate;
 
+    public int a = 10;
+
     @Override
     public void resetLearningImpl() {
-        breadthFirstStrat = breadthFirstStrategyOption.isSet();
+//        breadthFirstStrat = breadthFirstStrategyOption.isSet();
+        breadthFirstStrat = false;
         negLambda = (1.0 / (double) horizonOption.getValue())
-                * (Math.log(weightThreshold) / Math.log(2));
-        maxHeight = maxHeightOption.getValue();
+                * (Math.log(weightThreshold) / Math.log(2)) / 10;
+//        maxHeight = maxHeightOption.getValue();
+        maxHeight = 10;
         numberDimensions = -1;
         root = null;
         timestamp = 0;
@@ -130,6 +175,7 @@ public class ClusTree extends AbstractClusterer{
         if(root == null){
             numberDimensions = instance.numAttributes();
             root = new Node(numberDimensions, 0);
+            realRoot = root;
         }
         else{
             if(numberDimensions!=instance.numAttributes())
@@ -137,7 +183,7 @@ public class ClusTree extends AbstractClusterer{
         }
 
         ClusKernel newPointAsKernel = new ClusKernel(instance.toDoubleArray(), numberDimensions);
-        insert(newPointAsKernel, new SimpleBudget(1000),timestamp);
+        insert(newPointAsKernel, new SimpleBudget(10000),timestamp);
     }
 
     /**
@@ -423,7 +469,7 @@ public class ClusTree extends AbstractClusterer{
             return root;
     }
 
-    private ArrayList<Node> collectLeafNodes(Node curr){
+    public ArrayList<Node> collectLeafNodes(Node curr){
         ArrayList<Node> toReturn = new ArrayList<Node>();
         if (curr==null)
             return toReturn;
@@ -803,6 +849,34 @@ public class ClusTree extends AbstractClusterer{
         }
 
         return clusters;
+    }
+
+    /**
+     * Returns all the leaf nodes starting from some node
+     * @param node
+     * @return
+     */
+    public ArrayList<Node> getLeaves(Node node) {
+        ArrayList<Node> leaves = new ArrayList<Node>();
+        boolean flag = false;
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(node);
+
+        while (!queue.isEmpty() || flag == false) {
+            Node temp = queue.remove();
+
+            try {
+                for (Entry e: temp.getEntries()) {
+                    if (e.getChild().isLeaf()) {
+                        leaves.add(e.getChild());
+                    }
+                }
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return leaves;
     }
 
 

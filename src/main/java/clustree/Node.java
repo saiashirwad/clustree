@@ -1,10 +1,24 @@
 package clustree;
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Node implements Serializable {
 
     final int NUMBER_ENTRIES = 3;
     static int INSERTIONS_BETWEEN_CLEANUPS = 10000;
+
+    /**
+     * Sai: May use this within the "mirror" tree.
+     */
+    private static int count = 0;
+    private int id = 0;
+
+    public int getId() {
+        return id;
+    }
+
+
 
     /**
      * The children of this node.
@@ -15,6 +29,11 @@ public class Node implements Serializable {
      * The depth at which this <code>Node</code> is in the tree.
      */
     private int level;
+
+    public int getLevel() {
+        return this.level;
+    }
+
 
     /**
      * Initialze a normal node, which is not fake.
@@ -32,6 +51,8 @@ public class Node implements Serializable {
             entries[i] = new Entry(numberDimensions);
             entries[i].setNode(this);
         }
+
+        id = count++;
     }
 
     /**

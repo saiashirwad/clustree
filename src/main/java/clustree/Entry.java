@@ -1,6 +1,8 @@
 package clustree;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Entry implements Serializable {
 
@@ -13,6 +15,23 @@ public class Entry implements Serializable {
      * node, it is here just to simplify the insertion recuersion.
      */
     private ClusKernel buffer;
+
+    public Queue<ClusKernel> points;
+
+    public void addPoint(ClusKernel ck) {
+        if (points.size() < 700) {
+            points.add(ck);
+        }
+        else {
+            points.remove();
+            points.add(ck);
+        }
+    }
+
+    public Queue<ClusKernel> getPoints() {
+        return points;
+    }
+
     /**
      * A reference to the next node in the tree. <code>null</code> if we are
      * at a leaf, or this is an entry is part of a lying <code>Node</code>.
@@ -49,6 +68,7 @@ public class Entry implements Serializable {
         this.buffer = new ClusKernel(numberDimensions);
         this.child = null;
         this.timestamp = Entry.defaultTimestamp;
+        this.points = new LinkedList<ClusKernel>();
     }
 
     /**
@@ -91,12 +111,15 @@ public class Entry implements Serializable {
      * @param cluster The cluster from which the information is to be extracted.
      * @param currentTime The timestamp for the moment where this Entry was
      * was generated.
-     * @see Kernel
+     * @see
      * @see #data
      */
     public Entry(int numberDimensions, ClusKernel cluster, long currentTime) {
         this(numberDimensions);
         this.data.add(cluster);
+        if (this.getNode().isLeaf() && cluster.getTotalN() == 1.0) {
+            this.addPoint(cluster);
+        }
         this.timestamp = currentTime;
     }
     /**
@@ -111,6 +134,15 @@ public class Entry implements Serializable {
         this(numberDimensions);
         this.parentEntry = parentEntry;
         this.data.add(cluster);
+        try {
+            if (this.getNode().isLeaf() && cluster.getTotalN() == 1.0) {
+                this.addPoint(cluster);
+            }
+        }
+        catch (Exception e) {
+
+        }
+
         this.node = containerNode;
         this.timestamp = currentTime;
     }
@@ -125,6 +157,7 @@ public class Entry implements Serializable {
         this.data = new ClusKernel(other.data);
         this.timestamp = other.timestamp;
         this.child = other.child;
+        this.points = other.points;
         if (other.getChild()!=null)
             for (Entry e : other.getChild().getEntries()){
                 e.setParentEntry(this);
@@ -148,6 +181,10 @@ public class Entry implements Serializable {
         this.data.clear();
         this.buffer.clear();
         this.child = null;
+//        while (!this.points.isEmpty()) {
+//            this.points.remove();
+//        }
+        this.points.clear();
         this.timestamp = Entry.defaultTimestamp;
     }
 
@@ -161,6 +198,8 @@ public class Entry implements Serializable {
     protected void shallowClear() {
         this.buffer.clear();
         this.data.clear();
+        this.points.clear();
+
     }
 
     /**
@@ -204,6 +243,7 @@ public class Entry implements Serializable {
         assert (this.isEmpty());
         assert (other.getBuffer().isEmpty());
         this.data.add(other.data);
+
         this.timestamp = currentTime;
         this.child = other.child;
         if (child!=null){
@@ -224,6 +264,14 @@ public class Entry implements Serializable {
      */
     public void add(Entry other) {
         this.data.add(other.data);
+        try {
+            if (this.getNode().isLeaf() && other.data.getTotalN() == 1.0) {
+                this.addPoint(other.data);
+//++                System.out.println(this.points.size());
+            }
+        }
+        catch (Exception e) {}
+
     }
 
     /**
@@ -237,6 +285,9 @@ public class Entry implements Serializable {
                                   double negLambda) {
         this.data.aggregate(other.data, currentTime - this.timestamp,
                 negLambda);
+        for (ClusKernel point: other.getPoints()) {
+            this.addPoint(point);
+        }
         this.timestamp = currentTime;
     }
 
@@ -251,6 +302,9 @@ public class Entry implements Serializable {
                                     double negLambda) {
         this.getData().aggregate(otherData, currentTime - this.timestamp,
                 negLambda);
+        if (this.getNode().isLeaf() && otherData.getTotalN() == 1) {
+            this.addPoint(otherData);
+        }
         this.timestamp = currentTime;
     }
 
@@ -287,6 +341,9 @@ public class Entry implements Serializable {
         this.data.add(other.data);
         if (this.timestamp < other.timestamp) {
             this.timestamp = other.timestamp;
+        }
+        for (ClusKernel point: other.getPoints()) {
+            this.addPoint(point);
         }
     }
 
@@ -391,13 +448,16 @@ public class Entry implements Serializable {
                 e.setParentEntry(this);
         //this.setParentEntry(newEntry.getParentEntry());
         this.child=newEntry.child;
+        this.points.clear();
+        this.points.addAll(newEntry.getPoints());
+
     }
 
     /**
      * This functions reads every entry in the child node and calculates the
      * corresponding <code>data Kernel</code>. Timestamps are not changed.
      * @see #data
-     * @see Kerne
+     * @see Kernel
      */
     protected void recalculateData() {
         Node currentChild = this.getChild();

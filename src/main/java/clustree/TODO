@@ -1,0 +1,13 @@
+# TODO
+
+* Whenever a **Node** is updated, make sure to update **insertionsSinceLastTraversal**.
+    * Used by the **TreeTraverser** thread 
+    * Open to better ways of doing this; this seems the easiest way, imo
+    * The idea is to keep track of the subtree(s) that have changed the most since the last traversal
+        * Planning on keeping track of the top n (where n is a smallish number) nodes in a level ordered by the values of their **insertionsSinceLastTraversal**
+       
+     * Find significant bits of the code that should update **insertionsSinceLastTraversal**
+     
+    
+
+
