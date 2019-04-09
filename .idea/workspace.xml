@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="55dae6fa-ca25-45ec-9fcf-e0adba8627fe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/clustree/Counter.java" afterDir="false" />
+    <list default="true" id="55dae6fa-ca25-45ec-9fcf-e0adba8627fe" name="Default Changelist" comment="eh">
+      <change afterPath="$PROJECT_DIR$/src/main/java/clustree/PAMThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/clustree/PAMThread_.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/clustree/Dummy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/clustree/Dummy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/clustree/Counter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/clustree/Counter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/clustree/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/clustree/Entry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/clustree/TreePrinter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/clustree/ClusTree$BestMergeInNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/clustree/ClusTree$BestMergeInNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/clustree/ClusTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/clustree/ClusTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/clustree/Dummy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/clustree/Dummy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/clustree/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/clustree/Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clustree/ClusKernel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clustree/ClusTree$BestMergeInNode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clustree/ClusTree.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clustree/Dummy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clustree/Node.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clustree/SimpleCSVStream.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -24,18 +25,6 @@
   <component name="ChangesViewManager" show_ignored="true" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Dummy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1280">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/clustree/ClusTree.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -51,10 +40,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Entry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+            <state relative-caret-position="997">
+              <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#682#683#0" expanded="true" />
+                <element signature="e#722#723#0" expanded="true" />
+                <element signature="e#1413#1414#0" expanded="true" />
+                <element signature="e#1443#1444#0" expanded="true" />
                 <element signature="e#955#956#0" expanded="true" />
                 <element signature="e#984#985#0" expanded="true" />
                 <element signature="e#5448#5449#0" expanded="true" />
@@ -87,36 +80,45 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/clustree/PAMThread_.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="30" column="63" lean-forward="true" selection-start-line="30" selection-start-column="63" selection-end-line="30" selection-end-column="63" />
+            <state relative-caret-position="240">
+              <caret line="12" column="28" lean-forward="true" selection-end-line="36" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Counter.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/clustree/PAMThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+            <state relative-caret-position="176">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
               <folding>
-                <element signature="e#129#130#0" expanded="true" />
-                <element signature="e#152#153#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Node.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/clustree/ClusKernel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6420">
-              <caret line="331" column="19" selection-start-line="331" selection-start-column="19" selection-end-line="331" selection-end-column="19" />
+            <state relative-caret-position="280">
+              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#382#383#0" expanded="true" />
-                <element signature="e#407#408#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1-sources.jar!/org/apache/commons/math3/linear/Array2DRowRealMatrix.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-320">
+              <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -133,10 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>buffer</find>
-      <find>budget</find>
-      <find>aggregateToBuffer</find>
-      <find>negLambda =</find>
       <find>aggregate</find>
       <find>weight</find>
       <find>emptybu</find>
@@ -163,6 +161,10 @@
       <find>split</find>
       <find>impl</find>
       <find>timestamp</find>
+      <find>LoadI</find>
+      <find>this.points</find>
+      <find>points</find>
+      <find>points =</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -185,10 +187,12 @@
         <option value="$PROJECT_DIR$/src/main/java/clustree/TreePrinter.java" />
         <option value="$PROJECT_DIR$/src/main/java/clustree/Node.java" />
         <option value="$PROJECT_DIR$/src/main/java/clustree/ClusTree.java" />
-        <option value="$PROJECT_DIR$/src/main/java/clustree/Counter.java" />
         <option value="$PROJECT_DIR$/src/main/java/clustree/Dummy.java" />
-        <option value="$PROJECT_DIR$/src/main/java/clustree/Entry.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/clustree/Counter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/clustree/PAMThread.java" />
+        <option value="$PROJECT_DIR$/src/main/java/clustree/Entry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/clustree/PAMThread_.java" />
       </list>
     </option>
   </component>
@@ -261,6 +265,14 @@
               <item name="clustree" type="462c0819:PsiDirectoryNode" />
               <item name="Tree.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
+            <path>
+              <item name="clustree" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clustree" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="clust4j" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -275,7 +287,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
@@ -346,7 +358,7 @@
       <workItem from="1554706582121" duration="7702000" />
       <workItem from="1554736064453" duration="6450000" />
       <workItem from="1554806502499" duration="5733000" />
-      <workItem from="1554833033573" duration="576000" />
+      <workItem from="1554833033573" duration="4641000" />
     </task>
     <task id="LOCAL-00001" summary="eh">
       <created>1554286730517</created>
@@ -369,11 +381,18 @@
       <option name="project" value="LOCAL" />
       <updated>1554806548837</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="eh">
+      <created>1554833787222</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1554833787222</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98577000" />
+    <option name="totallyTimeSpent" value="102642000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -395,7 +414,7 @@
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32690248" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32690248" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.47802788" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -405,7 +424,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.41371918" />
+      <window_info anchor="bottom" id="Messages" order="12" visible="true" weight="0.41371918" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -586,13 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Tree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/clustree/LeafNode.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Observer.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -643,16 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/ClusKernel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -728,10 +730,63 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Tree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="24" column="84" lean-forward="true" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/clust4j/Clust4j.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-160">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/clust4j/GlobalState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/clust4j/NamedEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/clust4j/data/DataSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/clust4j/data/ExampleDataSets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1480">
+          <caret line="88" column="27" lean-forward="true" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
+          <folding>
+            <element signature="e#3751#3752#0" expanded="true" />
+            <element signature="e#3782#3783#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Counter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        <state relative-caret-position="180">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
           <folding>
             <element signature="e#129#130#0" expanded="true" />
             <element signature="e#152#153#0" expanded="true" />
@@ -741,7 +796,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6420">
+        <state relative-caret-position="542">
           <caret line="331" column="19" selection-start-line="331" selection-start-column="19" selection-end-line="331" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -751,12 +806,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Entry.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1-sources.jar!/org/apache/commons/math3/linear/RealMatrix.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+        <state relative-caret-position="260">
+          <caret line="34" column="17" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1-sources.jar!/org/apache/commons/math3/linear/Array2DRowRealMatrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-320">
+          <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/ClusKernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/Entry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="997">
+          <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#682#683#0" expanded="true" />
+            <element signature="e#722#723#0" expanded="true" />
+            <element signature="e#1413#1414#0" expanded="true" />
+            <element signature="e#1443#1444#0" expanded="true" />
             <element signature="e#955#956#0" expanded="true" />
             <element signature="e#984#985#0" expanded="true" />
             <element signature="e#5448#5449#0" expanded="true" />
@@ -787,10 +873,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/PAMThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="30" column="63" lean-forward="true" selection-start-line="30" selection-start-column="63" selection-end-line="30" selection-end-column="63" />
+        <state relative-caret-position="176">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/clustree/PAMThread_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="28" lean-forward="true" selection-end-line="36" />
         </state>
       </provider>
     </entry>
@@ -871,6 +967,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>Maven: classworlds:classworlds:1.1-alpha-2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

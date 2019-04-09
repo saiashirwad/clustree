@@ -1,8 +1,13 @@
 package clustree;
 
+import org.kramerlab.bmad.general.Tuple;
+
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Vector;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class Entry implements Serializable {
@@ -21,6 +26,14 @@ public class Entry implements Serializable {
 
     public Queue<ClusKernel> points;
 
+    public Queue<Tuple<ClusKernel, Instant>> points_;
+
+//    public ArrayList<ArrayList<Double>> kmedoids;
+    double[][] kmedoids;
+    public void setKmedoids(double[][] kmedoids) {
+        this.kmedoids = kmedoids;
+    }
+
     public void addPoint(ClusKernel ck) {
         if (points.size() < 700) {
             points.add(ck);
@@ -33,11 +46,17 @@ public class Entry implements Serializable {
         if (counter >= 500) {
             counter = 0;
             // apply pam
+            Thread t = new Thread(new PAMThread(this.points, this));
+            t.start();
             Counter.getInstance().val ++;
         }
         else {
             counter ++;
         }
+    }
+
+    public Queue<Tuple<ClusKernel, Instant>> getPoints_() {
+        return points_;
     }
 
     public Queue<ClusKernel> getPoints() {
@@ -81,6 +100,7 @@ public class Entry implements Serializable {
         this.child = null;
         this.timestamp = Entry.defaultTimestamp;
         this.points = new LinkedList<ClusKernel>();
+        this.points_ = new LinkedList<Tuple<ClusKernel, Instant>>();
         this.counter = 0;
     }
 
@@ -174,6 +194,7 @@ public class Entry implements Serializable {
         this.timestamp = other.timestamp;
         this.child = other.child;
         this.points = other.points;
+        this.points_ = other.points_;
         if (other.getChild()!=null)
             for (Entry e : other.getChild().getEntries()){
                 e.setParentEntry(this);

@@ -8,7 +8,6 @@ public class Counter {
         val = 0;
     }
 
-
     public static Counter getInstance() {
         if (instance == null) {
             instance = new Counter();
