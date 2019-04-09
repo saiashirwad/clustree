@@ -24,6 +24,8 @@ public class ClusKernel extends CFCluster{
      */
 
     private double totalN;
+    
+    public long timestamp;
 
     /**
      * A constructor that makes a Kernel which just represents the given point.
