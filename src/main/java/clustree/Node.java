@@ -18,6 +18,17 @@ public class Node implements Serializable {
         return id;
     }
 
+//    private int insertionsSinceLastTraversal = 0;
+
+    public int sinceLastTraversal = 0;
+
+//    public void incrementInsertionsSinceLastTraversal() {
+//        this.insertionsSinceLastTraversal += 1;
+//    }
+//
+//    public void clearInsertionsSinceLastTraversal() {
+//        this.insertionsSinceLastTraversal = 0;
+//    }
 
 
     /**

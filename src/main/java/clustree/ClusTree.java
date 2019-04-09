@@ -493,6 +493,8 @@ public class ClusTree extends AbstractClusterer{
 
         currentNode.makeOlder(timestamp, this.negLambda);
 
+        currentNode.sinceLastTraversal += 1;
+
         // This variable will be changed from to null to an actual reference
         // in the following if-else block if we have to insert something here,
         // either because this is a leaf, or because of split propagation.

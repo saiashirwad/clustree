@@ -14,6 +14,31 @@ public class Dummy {
     public static Clusterer learner = new ClusTree();
     public static int i = 500000;
 
+    public int[] checkTree() {
+        Node root = learner.getRoot();
+
+        int[] maxInLevel = new int[9];
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.remove();
+            int level = temp.getLevel();
+
+            if (temp.sinceLastTraversal > maxInLevel[temp.getLevel()]) {
+                maxInLevel[temp.getLevel()] = temp.sinceLastTraversal;
+            }
+            try {
+                for (Entry e: temp.getEntries()) {
+                    queue.add(e.getChild());
+                }
+            }
+            catch (Exception e) {}
+        }
+        return maxInLevel;
+    }
+
+
     public static void main(String[] args) {
 
         SimpleCSVStream stream = new SimpleCSVStream();
@@ -27,9 +52,10 @@ public class Dummy {
 
 
 
+
         while (stream.hasMoreInstances() && i > 0) {
-            if (i % 50000 == 0) {
-                System.out.println("yay");
+            if (i % 500 == 0) {
+
             }
             InstanceExample trainInst = stream.nextInstance();
             Instance inst = trainInst.instance;
@@ -46,12 +72,13 @@ public class Dummy {
 //        ArrayList<ClusKernel> points = new ArrayList<ClusKernel>();
 
         Queue<ClusKernel> points = new LinkedList<ClusKernel>();
+        LinkedList<Integer> pointArrSizes = new LinkedList<Integer>();
         int nPoints = 0;
         for (Node leaf: leaves) {
             for (Entry e: leaf.getEntries()) {
                 e.data.makeOlder(learner.getTimeStamp() - e.getTimestamp(), learner.getNegLambda());
                 Tuple<Double, Double> data = new Tuple<Double, Double>(e.data.totalN, e.data.getWeight());
-
+                pointArrSizes.add(e.points.size());
                 points.addAll(e.points);
 
 //                try {
@@ -66,8 +93,9 @@ public class Dummy {
             }
         }
 
-
-
+        Collections.sort(pointArrSizes);
+        System.out.println("printing pointArrSizes of leaf entries: ");
+        System.out.println(pointArrSizes);
         Queue<Node> q = new LinkedList<Node>();
 //        q.add(root);
 //

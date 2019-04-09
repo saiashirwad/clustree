@@ -117,7 +117,7 @@ public class Entry implements Serializable {
     public Entry(int numberDimensions, ClusKernel cluster, long currentTime) {
         this(numberDimensions);
         this.data.add(cluster);
-        if (this.getNode().isLeaf() && cluster.getTotalN() == 1.0) {
+        if (cluster.getTotalN() == 1.0) {
             this.addPoint(cluster);
         }
         this.timestamp = currentTime;
@@ -135,7 +135,7 @@ public class Entry implements Serializable {
         this.parentEntry = parentEntry;
         this.data.add(cluster);
         try {
-            if (this.getNode().isLeaf() && cluster.getTotalN() == 1.0) {
+            if (cluster.getTotalN() == 1.0) {
                 this.addPoint(cluster);
             }
         }
@@ -265,7 +265,7 @@ public class Entry implements Serializable {
     public void add(Entry other) {
         this.data.add(other.data);
         try {
-            if (this.getNode().isLeaf() && other.data.getTotalN() == 1.0) {
+            if (other.data.getTotalN() == 1.0) {
                 this.addPoint(other.data);
 //++                System.out.println(this.points.size());
             }
@@ -302,7 +302,7 @@ public class Entry implements Serializable {
                                     double negLambda) {
         this.getData().aggregate(otherData, currentTime - this.timestamp,
                 negLambda);
-        if (this.getNode().isLeaf() && otherData.getTotalN() == 1) {
+        if (otherData.getTotalN() == 1) {
             this.addPoint(otherData);
         }
         this.timestamp = currentTime;
