@@ -36,6 +36,7 @@ public class ClusKernel extends CFCluster{
     public ClusKernel(double[] point, int dim) {
         super(point, dim);
         this.totalN = 1;
+    
     }
 
     /**
