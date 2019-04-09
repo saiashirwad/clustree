@@ -3,6 +3,7 @@ package clustree;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Entry implements Serializable {
 
@@ -10,6 +11,8 @@ public class Entry implements Serializable {
      * The actual entry data.
      */
     public ClusKernel data;
+
+    public int counter;
     /**
      * The buffer of this entry. It can also be seen as the buffer of the child
      * node, it is here just to simplify the insertion recuersion.
@@ -25,6 +28,15 @@ public class Entry implements Serializable {
         else {
             points.remove();
             points.add(ck);
+        }
+
+        if (counter >= 500) {
+            counter = 0;
+            // apply pam
+            Counter.getInstance().val ++;
+        }
+        else {
+            counter ++;
         }
     }
 
@@ -69,6 +81,7 @@ public class Entry implements Serializable {
         this.child = null;
         this.timestamp = Entry.defaultTimestamp;
         this.points = new LinkedList<ClusKernel>();
+        this.counter = 0;
     }
 
     /**
@@ -99,6 +112,7 @@ public class Entry implements Serializable {
         }
 
         this.timestamp = currentTime;
+        this.counter = 0;
     }
 
 
@@ -121,6 +135,7 @@ public class Entry implements Serializable {
             this.addPoint(cluster);
         }
         this.timestamp = currentTime;
+        counter = 0;
     }
     /**
      * extended constructor with containerNode and parentEntry
@@ -142,6 +157,7 @@ public class Entry implements Serializable {
         catch (Exception e) {
 
         }
+        counter = 0;
 
         this.node = containerNode;
         this.timestamp = currentTime;
@@ -162,6 +178,7 @@ public class Entry implements Serializable {
             for (Entry e : other.getChild().getEntries()){
                 e.setParentEntry(this);
             }
+        counter = 0;
     }
 
     public Node getNode() {

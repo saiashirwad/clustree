@@ -12,32 +12,7 @@ public class Dummy {
 
     public static Queue<Instance> q = new LinkedList<Instance>();
     public static Clusterer learner = new ClusTree();
-    public static int i = 500000;
-
-    public int[] checkTree() {
-        Node root = learner.getRoot();
-
-        int[] maxInLevel = new int[9];
-        Queue<Node> queue = new LinkedList<Node>();
-        queue.add(root);
-
-        while (!queue.isEmpty()) {
-            Node temp = queue.remove();
-            int level = temp.getLevel();
-
-            if (temp.sinceLastTraversal > maxInLevel[temp.getLevel()]) {
-                maxInLevel[temp.getLevel()] = temp.sinceLastTraversal;
-            }
-            try {
-                for (Entry e: temp.getEntries()) {
-                    queue.add(e.getChild());
-                }
-            }
-            catch (Exception e) {}
-        }
-        return maxInLevel;
-    }
-
+    public static int i = 100000;
 
     public static void main(String[] args) {
 
@@ -54,9 +29,9 @@ public class Dummy {
 
 
         while (stream.hasMoreInstances() && i > 0) {
-            if (i % 500 == 0) {
-
-            }
+//            if (i % 10000 == 0) {
+//                System.out.println(i);
+//            }
             InstanceExample trainInst = stream.nextInstance();
             Instance inst = trainInst.instance;
             learner.trainOnInstance(inst);
@@ -93,46 +68,32 @@ public class Dummy {
             }
         }
 
-        Collections.sort(pointArrSizes);
-        System.out.println("printing pointArrSizes of leaf entries: ");
-        System.out.println(pointArrSizes);
-        Queue<Node> q = new LinkedList<Node>();
-//        q.add(root);
-//
-//        while (!q.isEmpty()) {
-//            Node temp = q.remove();
-//
-//            try {
-//                for (Entry e : temp.getEntries()) {
-////                    System.out.println(e.points.size());
-//                    q.add(e.getChild());
-//                }
-//            }
-//            catch (Exception e) {
-//                continue;
-//            }
-//        }
+        System.out.println(Counter.getInstance().val);
 
-        System.out.println(points.size());
-        Comparator<Tuple<Double, Double>> comparator = new Comparator<Tuple<Double, Double>>() {
-            public int compare(Tuple<Double, Double> o1, Tuple<Double, Double> o2) {
-                return o1._2.compareTo(o2._2);
+    }
+
+    public int[] checkTree() {
+        Node root = learner.getRoot();
+
+        int[] maxInLevel = new int[9];
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.remove();
+            int level = temp.getLevel();
+
+            if (temp.sinceLastTraversal > maxInLevel[temp.getLevel()]) {
+                maxInLevel[temp.getLevel()] = temp.sinceLastTraversal;
             }
-        };
-
-        Collections.sort(pointTuples, comparator);
-
-
-        for (Tuple<Double, Double> t: pointTuples) {
-//            System.out.println(t._2 + " " + t._1);
+            try {
+                for (Entry e: temp.getEntries()) {
+                    queue.add(e.getChild());
+                }
+            }
+            catch (Exception e) {}
         }
-
-
-
-
-        Clustering result = learner.getMicroClusteringResult();
-//        System.out.println(result);
-
+        return maxInLevel;
     }
 }
 
