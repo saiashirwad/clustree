@@ -18,23 +18,31 @@ public class PAMThread implements Runnable {
     }
 
     public void run() {
-        int k = 2;
-        double[][] data = new double[points.size()][points.peek().LS.length];
+        try {
+            int k = 2;
 
-        int i = 0;
+            double[][] data = new double[points.size()][points.peek().LS.length];
 
-        for (ClusKernel ck: points) {
-            for (int j = 0; j < ck.LS.length; j++) {
-               data[i][j] = ck.LS[j];
+            int i = 0;
+
+
+            for (ClusKernel ck : points) {
+                for (int j = 0; j < ck.LS.length; j++) {
+                    data[i][j] = ck.LS[j];
+                }
+                i++;
             }
-            i++;
+
+
+            Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
+            KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
+
+            ArrayList<double[]> centroids = km.getCentroids();
+
+            // I do not know if this is the best way to do this.
+            // This stores a reference to the original ClusKernel and then updates it's kmedoids
+            this.entry.setKmedoids(centroids);
         }
-
-        Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
-        KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
-
-        km.getCentroids();
-
-
+        catch (Exception e) {}
     }
 }

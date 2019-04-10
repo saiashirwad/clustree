@@ -29,8 +29,9 @@ public class Entry implements Serializable {
     public Queue<Tuple<ClusKernel, Instant>> points_;
 
 //    public ArrayList<ArrayList<Double>> kmedoids;
-    double[][] kmedoids;
-    public void setKmedoids(double[][] kmedoids) {
+    ArrayList<double[]> kmedoids;
+
+    public synchronized void setKmedoids(ArrayList<double[]> kmedoids) {
         this.kmedoids = kmedoids;
     }
 
@@ -52,6 +53,23 @@ public class Entry implements Serializable {
         }
         else {
             counter ++;
+        }
+    }
+
+    public void addPoint_(ClusKernel ck) {
+        if (points_.size() < 700) {
+            points_.add(new Tuple<>(ck, Instant.now()));
+        }
+        else {
+            points_.remove();
+            points_.add(new Tuple<>(ck, Instant.now()));
+        }
+
+        // Also add the time-based constraint
+        if (counter >= 500) {
+            counter = 0;
+
+            // Call upon thread to perform PAM
         }
     }
 

@@ -1,5 +1,6 @@
 package clustree;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 import java.util.LinkedList;
@@ -91,6 +92,8 @@ public class ClusTree extends AbstractClusterer{
     private int numberInsertions;
     private long timestamp;
 
+    private Instant lastUpdated;
+
     public long getTimeStamp() {
         return this.timestamp;
     }
@@ -133,6 +136,7 @@ public class ClusTree extends AbstractClusterer{
         negLambda = (1.0 / (double) horizonOption.getValue())
                 * (Math.log(weightThreshold) / Math.log(2)) / 10;
 //        maxHeight = maxHeightOption.getValue();
+
         maxHeight = 10;
         numberDimensions = -1;
         root = null;
@@ -170,6 +174,7 @@ public class ClusTree extends AbstractClusterer{
     @Override
     public void trainOnInstanceImpl(Instance instance) {
         timestamp++;
+        lastUpdated = Instant.now();
 
         //TODO check if instance contains label
         if(root == null){
@@ -435,7 +440,8 @@ public class ClusTree extends AbstractClusterer{
             currentNode.addEntry(newEntry, timestamp);
         } else {
             if (currentNode.isLeaf() && (this.hasMaximalSize()
-                    || !budget.hasMoreTime())) {
+                    || !QueueState.getInstance().isEmpty))  // replaced !budget.hasMoreTime() w/ QueueState
+            {
                 mergeEntryWithoutSplit(currentNode, newEntry,
                         timestamp);
             } else {
@@ -522,12 +528,23 @@ public class ClusTree extends AbstractClusterer{
                         this.negLambda);
             }
 
-            if (!budget.hasMoreTime()) {
+//            if (!budget.hasMoreTime()) {
+//                bestEntry.aggregateToBuffer(pointToInsert, timestamp,
+//                        this.negLambda);
+//                if (!isCarriedBufferEmpty) {
+//                    bestBufferEntry.aggregateToBuffer(carriedBuffer,
+//                            timestamp, this.negLambda);
+//                }
+//                return null;
+//            }
+
+            if (!QueueState.getInstance().isEmpty) {
                 bestEntry.aggregateToBuffer(pointToInsert, timestamp,
                         this.negLambda);
                 if (!isCarriedBufferEmpty) {
                     bestBufferEntry.aggregateToBuffer(carriedBuffer,
                             timestamp, this.negLambda);
+                    System.out.println("lol");
                 }
                 return null;
             }
