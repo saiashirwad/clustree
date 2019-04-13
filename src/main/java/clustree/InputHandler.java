@@ -4,7 +4,10 @@ import com.yahoo.labs.samoa.instances.Instance;
 
 public class InputHandler implements Runnable {
 
-    private volatile boolean shutdown;
+    public StreamStatus streamStatus = new StreamStatus();
+
+    private volatile boolean shutdown = false;
+
     public void run() {
         while (!shutdown) {
             if (Dummy.i % 10000 == 0 && Dummy.i > 0) {

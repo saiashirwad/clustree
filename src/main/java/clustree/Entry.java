@@ -7,8 +7,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Vector;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class Entry implements Serializable {
 
@@ -45,11 +43,17 @@ public class Entry implements Serializable {
         }
 
         if (counter >= 500) {
+            if (this.node.isLeaf()) {
+                // apply pam
+                Thread t = new Thread(new PAMThread(this.points, this));
+                t.start();
+//                try {
+//                    t.join();
+//                }
+//                catch (Exception e) {}
+            }
             counter = 0;
-            // apply pam
-            Thread t = new Thread(new PAMThread(this.points, this));
-            t.start();
-            Counter.getInstance().val ++;
+
         }
         else {
             counter ++;

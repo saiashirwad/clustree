@@ -31,12 +31,7 @@ public class PAMService implements Runnable {
         pool.shutdown();
     }
 
-    public void execute(Runnable task) {
-        try {
-
-        }
-        catch (Exception e) {}
+    public void shutdown() {
+        this.shutdown = true;
     }
-
-
 }

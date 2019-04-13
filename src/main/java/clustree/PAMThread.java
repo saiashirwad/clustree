@@ -11,15 +11,17 @@ import java.util.Queue;
 public class PAMThread implements Runnable {
     private Queue<ClusKernel> points;
     Entry entry;
+    int id = 0;
 
     public PAMThread(Queue<ClusKernel> points, Entry entry) {
         this.entry = entry;
         this.points = points;
+        this.id = Counter.getInstance().val++;
     }
 
     public void run() {
         try {
-            int k = 2;
+            int k = 10;
 
             double[][] data = new double[points.size()][points.peek().LS.length];
 
@@ -42,7 +44,10 @@ public class PAMThread implements Runnable {
             // I do not know if this is the best way to do this.
             // This stores a reference to the original ClusKernel and then updates it's kmedoids
             this.entry.setKmedoids(centroids);
+
+            System.out.println("Thread " + this.id + "done");
         }
         catch (Exception e) {}
+
     }
 }
