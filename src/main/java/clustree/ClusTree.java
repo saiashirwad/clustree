@@ -1,17 +1,22 @@
 package clustree;
 
+import java.lang.reflect.Array;
 import java.time.Instant;
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.clust4j.algo.KMedoids;
+import com.clust4j.algo.KMedoidsParameters;
 import moa.clusterers.clustree.util.*;
 import moa.cluster.Clustering;
 import moa.core.Measurement;
 import com.github.javacliparser.IntOption;
 import com.github.javacliparser.FlagOption;
 import com.yahoo.labs.samoa.instances.Instance;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
@@ -180,7 +185,6 @@ public class ClusTree extends AbstractClusterer{
         if(root == null){
             numberDimensions = instance.numAttributes();
             root = new Node(numberDimensions, 0);
-            realRoot = root;
         }
         else{
             if(numberDimensions!=instance.numAttributes())
@@ -190,6 +194,24 @@ public class ClusTree extends AbstractClusterer{
         ClusKernel newPointAsKernel = new ClusKernel(instance.toDoubleArray(), numberDimensions);
         insert(newPointAsKernel, new SimpleBudget(10000),timestamp);
     }
+
+//    @Override
+//    public void trainOnDoubleArray(double[] point) {
+//        timestamp ++;
+//        lastUpdated = Instant.now();
+//
+//        if (root == null) {
+//            numberDimensions = point.size();
+//            root = new Node(numberDimensions, 0);
+//        }
+//        else {
+//            if (numberDimensions != point.size())
+//                System.out.println("Wrong dimensionality, expected:"+numberDimensions+ "found:" + point.size());
+//        }
+////        ClusKernel newPointAsKernel = new ClusKernel(point, numberDimensions);
+////        insert(newPointAsKernel, new SimpleBudget(10000),timestamp);
+//    }
+
 
     /**
      * Insert a new point in the <code>Tree</code>. The point should be
@@ -868,6 +890,40 @@ public class ClusTree extends AbstractClusterer{
         }
 
         return clusters;
+    }
+
+    public ArrayList<double[]> collectLeafMedoids() {
+        ArrayList<double[]> medoids = new ArrayList<>();
+        ArrayList<Node> leaves = collectLeafNodes(root);
+
+        for (Node leaf: leaves) {
+            try {
+                for (Entry e: leaf.getEntries()) {
+                    medoids.addAll(e.kmedoids);
+                }
+            }
+            catch (Exception e) {}
+        }
+
+        return medoids;
+    }
+
+    public ArrayList<double[]> getKMedoids(int k) {
+        ArrayList<double[]> points = collectLeafMedoids();
+
+        double[][] data = new double[points.size()][numberDimensions];
+
+        int i = 0;
+        for (double[] point: points) {
+            data[i] = point;
+            i ++;
+        }
+
+        Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
+        KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
+
+        ArrayList<double[]> centroids = km.getCentroids();
+        return centroids;
     }
 
     /**

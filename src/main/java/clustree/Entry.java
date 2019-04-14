@@ -27,7 +27,7 @@ public class Entry implements Serializable {
     public Queue<Tuple<ClusKernel, Instant>> points_;
 
 //    public ArrayList<ArrayList<Double>> kmedoids;
-    ArrayList<double[]> kmedoids;
+    public ArrayList<double[]> kmedoids;
 
     public synchronized void setKmedoids(ArrayList<double[]> kmedoids) {
         this.kmedoids = kmedoids;

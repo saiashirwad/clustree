@@ -18,7 +18,7 @@ public class Dummy {
     public static Clusterer learner = new ClusTree();
     public static int i = 200000;
 
-    ArrayList<ArrayList<Double>> points = CSVReader.read("d:\\backup.csv");
+    ArrayList<double[]> points = CSVReader.read("d:\\backup.csv");
 
     public static void main(String[] args) {
 
@@ -102,7 +102,7 @@ public class Dummy {
 
 }
 
-enum StreamHandler {
-    UNIT_HANDLER,
-    AGGREGATE_HANDLER
-}
+//enum StreamHandler {
+//    UNIT_HANDLER,
+//    AGGREGATE_HANDLER
+//}

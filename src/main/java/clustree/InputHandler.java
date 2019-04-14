@@ -9,6 +9,7 @@ public class InputHandler implements Runnable {
     private volatile boolean shutdown = false;
 
     public void run() {
+
         while (!shutdown) {
             if (Dummy.i % 10000 == 0 && Dummy.i > 0) {
                 System.out.println(Dummy.i);

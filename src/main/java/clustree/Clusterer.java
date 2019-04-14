@@ -43,6 +43,11 @@ public interface Clusterer extends MOAObject, OptionHandler, AWTRenderable {
 
     void trainOnInstanceImpl(Instance varl);
 
+//    void trainOnDoubleArray(ArrayList<Double> varl);
+
+    ArrayList<double[]> collectLeafMedoids();
+    ArrayList<double[]> getKMedoids(int k);
+
     double[] getVotesForInstance(Instance var1);
 
     Measurement[] getModelMeasurements();
