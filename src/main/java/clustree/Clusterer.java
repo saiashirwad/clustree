@@ -1,6 +1,7 @@
 package clustree;
 
 
+import com.clust4j.algo.KMedoids;
 import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.instances.InstancesHeader;
 import moa.MOAObject;
@@ -46,7 +47,8 @@ public interface Clusterer extends MOAObject, OptionHandler, AWTRenderable {
 //    void trainOnDoubleArray(ArrayList<Double> varl);
 
     ArrayList<double[]> collectLeafMedoids();
-    ArrayList<double[]> getKMedoids(int k);
+    KMedoids getKMedoids(int k);
+    ArrayList<double[]> fakeMedoids(int k);
 
     double[] getVotesForInstance(Instance var1);
 

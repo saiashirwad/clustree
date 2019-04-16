@@ -29,11 +29,13 @@ public class Entry implements Serializable {
 //    public ArrayList<ArrayList<Double>> kmedoids;
     public ArrayList<double[]> kmedoids;
 
+    public boolean isUsed = false;
+
     public synchronized void setKmedoids(ArrayList<double[]> kmedoids) {
         this.kmedoids = kmedoids;
     }
 
-    public void addPoint(ClusKernel ck) {
+    public synchronized void addPoint(ClusKernel ck) {
         if (points.size() < 700) {
             points.add(ck);
         }
@@ -42,11 +44,18 @@ public class Entry implements Serializable {
             points.add(ck);
         }
 
-        if (counter >= 500) {
+        if (counter >= 50) {
             if (this.node.isLeaf()) {
                 // apply pam
-                Thread t = new Thread(new PAMThread(this.points, this));
-                t.start();
+
+                if (isUsed) {
+
+                }
+                else {
+                    Thread t = new Thread(new PAMThread(this.points, this));
+                    t.start();
+                }
+
 //                try {
 //                    t.join();
 //                }

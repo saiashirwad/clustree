@@ -8,6 +8,13 @@
     <artifactId>clustree</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.moa/moa -->
         <dependency>
@@ -34,6 +41,19 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.lejon</groupId>
+            <artifactId>T-SNE-Java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.clust4j.algo.KMeans;
+import com.clust4j.algo.KMeansParameters;
 import com.clust4j.algo.KMedoids;
 import com.clust4j.algo.KMedoidsParameters;
 import moa.clusterers.clustree.util.*;
@@ -51,6 +53,9 @@ public class ClusTree extends AbstractClusterer{
     public Node getRoot() {
         return root;
     }
+
+    ArrayList<double[]> points = null;
+    Array2DRowRealMatrix mat = null;
 
     public Node realRoot;
 
@@ -905,12 +910,7 @@ public class ClusTree extends AbstractClusterer{
             catch (Exception e) {}
         }
 
-        return medoids;
-    }
-
-    public ArrayList<double[]> getKMedoids(int k) {
-        ArrayList<double[]> points = collectLeafMedoids();
-
+        this.points = medoids;
         double[][] data = new double[points.size()][numberDimensions];
 
         int i = 0;
@@ -919,11 +919,47 @@ public class ClusTree extends AbstractClusterer{
             i ++;
         }
 
-        Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
-        KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
+        this.mat = new Array2DRowRealMatrix(data);
 
-        ArrayList<double[]> centroids = km.getCentroids();
-        return centroids;
+        return medoids;
+    }
+
+    public KMedoids getKMedoids(int k) {
+
+        if (this.mat == null) {
+            collectLeafMedoids();
+        }
+        KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
+        return km;
+    }
+
+    public KMeans getKMeans(int k) {
+        if (this.mat == null) {
+            collectLeafMedoids();
+        }
+        KMeans km = new KMeansParameters(k).fitNewModel(mat);
+        return km;
+    }
+
+    public ArrayList<double[]> fakeMedoids(int k) {
+        KMeans kmeans = getKMeans(k);
+        ArrayList<double[]> fakeMedoids = new ArrayList<>();
+
+        for (double[] centroid: kmeans.getCentroids()) {
+            double[] minPt = new double[numberDimensions];
+            double min = 0.0;
+            for (double[] point: this.points) {
+                double dist = Metrics.distance(centroid, point);
+                if (dist < min) {
+                    min = dist;
+                    minPt = point;
+                }
+            }
+
+            fakeMedoids.add(minPt);
+        }
+
+        return fakeMedoids;
     }
 
     /**

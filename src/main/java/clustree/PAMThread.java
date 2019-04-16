@@ -20,8 +20,9 @@ public class PAMThread implements Runnable {
     }
 
     public void run() {
+        this.entry.isUsed = true;
         try {
-            int k = 10;
+            int k = 5;
 
             double[][] data = new double[points.size()][points.peek().LS.length];
 
@@ -38,16 +39,29 @@ public class PAMThread implements Runnable {
 
             Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
             KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
+            final int[] results = km.getLabels();
+            System.out.println(results.toString());
+
+
 
             ArrayList<double[]> centroids = km.getCentroids();
+
 
             // I do not know if this is the best way to do this.
             // This stores a reference to the original ClusKernel and then updates it's kmedoids
             this.entry.setKmedoids(centroids);
+            this.entry.isUsed = false;
 
             System.out.println("Thread " + this.id + "done");
         }
-        catch (Exception e) {}
+        catch (java.util.ConcurrentModificationException e) {
+
+        }
+        catch (java.lang.IllegalArgumentException e) {
+
+        }
+        catch (Exception e) {
+        }
 
     }
 }

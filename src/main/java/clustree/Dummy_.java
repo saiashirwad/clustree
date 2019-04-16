@@ -1,5 +1,6 @@
 package clustree;
 
+import com.clust4j.algo.KMedoids;
 import moa.cluster.Cluster;
 import moa.cluster.Clustering;
 import moa.core.InstanceExample;
@@ -21,7 +22,7 @@ public class Dummy_ {
 
     public static void main(String[] args) {
 
-        ArrayList<double[]> points = CSVReader.read("d:\\backup.csv");
+        ArrayList<double[]> points = CSVReader.read("d:\\covertype.csv");
 
         SimpleCSVStream stream = new SimpleCSVStream();
         stream.csvFileOption.setValue("d:\\covertype.csv");
@@ -45,13 +46,19 @@ public class Dummy_ {
         }
         catch (Exception e) {}
 
-        System.out.println("dunzo");
+        System.out.println("DONE!");
 
-        ArrayList<double[]> kmedoids = learner.getKMedoids(2);
+        int[] ks = new int[]{5,15, 25, 35, 45, 50, 100};
 
-        double absoluteError = new Metrics().absoluteError(kmedoids, points);
-        System.out.println(absoluteError);
+        for (int k: ks) {
+            KMedoids km = learner.getKMedoids(k);
 
+            ArrayList<double[]> kmedoids = km.getCentroids();
+            double absoluteError = new Metrics().absoluteError(kmedoids, points);
+            double silhouette = km.silhouetteScore();
+
+            System.out.println("k = " + k + "\nabsolute error = " + absoluteError + "\nsilhouette coeff = " + silhouette + "\n");
+        }
 
     }
 
