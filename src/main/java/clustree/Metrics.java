@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Metrics {
 
-    public double absoluteError(ArrayList<double[]> kmedoids, ArrayList<double[]> points) {
+    public static double absoluteError(ArrayList<double[]> kmedoids, ArrayList<double[]> points) {
         double absoluteError = 0.0;
 
         for (double[] point: points) {

@@ -22,7 +22,7 @@ public class PAMThread implements Runnable {
     public void run() {
         this.entry.isUsed = true;
         try {
-            int k = 5;
+            int k = 20;
 
             double[][] data = new double[points.size()][points.peek().LS.length];
 

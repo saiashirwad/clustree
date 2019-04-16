@@ -8,6 +8,9 @@ import com.yahoo.labs.samoa.instances.Instance;
 import org.jfree.data.io.CSV;
 import org.kramerlab.bmad.general.Tuple;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -17,10 +20,11 @@ public class Dummy_ {
 
     public static Queue<Instance> q = new LinkedList<Instance>();
     public static Clusterer learner = new ClusTree();
-    public static int i = 100000;
+    public static int i = 500000;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
 
         ArrayList<double[]> points = CSVReader.read("d:\\covertype.csv");
 
@@ -50,15 +54,27 @@ public class Dummy_ {
 
         int[] ks = new int[]{5,15, 25, 35, 45, 50, 100};
 
+        FileWriter fileWriter = new FileWriter("./results.txt");
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
         for (int k: ks) {
             KMedoids km = learner.getKMedoids(k);
 
             ArrayList<double[]> kmedoids = km.getCentroids();
-            double absoluteError = new Metrics().absoluteError(kmedoids, points);
+            double absoluteError = Metrics.absoluteError(kmedoids, points);
             double silhouette = km.silhouetteScore();
 
             System.out.println("k = " + k + "\nabsolute error = " + absoluteError + "\nsilhouette coeff = " + silhouette + "\n");
+            printWriter.println("k = " + k + "\nabsolute error = " + absoluteError + "\nsilhouette coeff = " + silhouette + "\n");
+
+
+            ArrayList<double[]> fakeMedoids = learner.fakeMedoids(k);
+            double abs = Metrics.absoluteError(fakeMedoids, points);
+            System.out.println("Fake medoids: absolute error = " + abs);
+            printWriter.println("Fake medoids: absolute error = " + abs);
         }
+
+        printWriter.close();
 
     }
 

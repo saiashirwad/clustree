@@ -1,0 +1,35 @@
+k = 5
+absolute error = 832460.8138237821
+silhouette coeff = 0.34803368254663225
+
+Fake medoids: absolute error = 1284511.6230017482
+k = 15
+absolute error = 630071.7263616656
+silhouette coeff = 0.33160157684094593
+
+Fake medoids: absolute error = 1284511.6230017482
+k = 25
+absolute error = 568584.1224968613
+silhouette coeff = 0.32012770016240283
+
+Fake medoids: absolute error = 1284511.6230017482
+k = 35
+absolute error = 542545.3618993735
+silhouette coeff = 0.2761559117578897
+
+Fake medoids: absolute error = 1284511.6230017482
+k = 45
+absolute error = 536345.382307914
+silhouette coeff = 0.25688054879562616
+
+Fake medoids: absolute error = 1284511.6230017482
+k = 50
+absolute error = 534597.7318034245
+silhouette coeff = 0.24472137371954947
+
+Fake medoids: absolute error = 1284511.6230017482
+k = 100
+absolute error = 520499.99747729674
+silhouette coeff = 0.24405813758607472
+
+Fake medoids: absolute error = 1284511.6230017482
