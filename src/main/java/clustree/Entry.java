@@ -24,6 +24,15 @@ public class Entry implements Serializable {
 
     public Queue<ClusKernel> points;
 
+    public ArrayList<double[]> getRawPoints() {
+        ArrayList<double[]> points = new ArrayList<>();
+        for (ClusKernel ck: this.points) {
+            points.add(ck.getPoint());
+        }
+
+        return points;
+    }
+
     public Queue<Tuple<ClusKernel, Instant>> points_;
 
 //    public ArrayList<ArrayList<Double>> kmedoids;
@@ -54,12 +63,14 @@ public class Entry implements Serializable {
                 else {
                     Thread t = new Thread(new PAMThread(this.points, this));
                     t.start();
+
+//                    try {
+//                        t.join();
+//                    }
+//                    catch (Exception e) {}
                 }
 
-//                try {
-//                    t.join();
-//                }
-//                catch (Exception e) {}
+
             }
             counter = 0;
 
@@ -86,6 +97,7 @@ public class Entry implements Serializable {
         }
     }
 
+
     public Queue<Tuple<ClusKernel, Instant>> getPoints_() {
         return points_;
     }
@@ -93,6 +105,8 @@ public class Entry implements Serializable {
     public Queue<ClusKernel> getPoints() {
         return points;
     }
+
+//
 
     /**
      * A reference to the next node in the tree. <code>null</code> if we are

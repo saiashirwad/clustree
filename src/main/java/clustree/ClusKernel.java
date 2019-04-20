@@ -214,6 +214,10 @@ public class ClusKernel extends CFCluster{
 //        return res;
 //    }
 
+    public double[] getPoint() {
+        return  this.LS;
+    }
+
     @Override
     public double getInclusionProbability(Instance instance) {
         //trivial cluster

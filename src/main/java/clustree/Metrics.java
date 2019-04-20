@@ -7,15 +7,30 @@ import java.util.HashMap;
 public class Metrics {
 
     public static double absoluteError(ArrayList<double[]> kmedoids, ArrayList<double[]> points) {
+        double maxDist = 0;
         double absoluteError = 0.0;
+        int lessThan1 = 0, greaterThan1 = 0;
 
         for (double[] point: points) {
             ArrayList<Double> distances = new ArrayList<>();
             for (double[] medoid: kmedoids) {
                 distances.add(distance(point, medoid));
             }
-            absoluteError += Collections.min(distances);
+            double dist = Collections.min(distances);
+            if (dist < 1)
+                lessThan1 += 1;
+            else
+                greaterThan1 += 1;
+            absoluteError += dist;
+
+            if (dist > maxDist)
+                maxDist = dist;
         }
+//
+//        System.out.println("Less than 0: " + lessThan1);
+//        System.out.println("Greater than 0: " + greaterThan1);
+//
+//        System.out.println("Max distance: " + maxDist);
         return absoluteError;
     }
 

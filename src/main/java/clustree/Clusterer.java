@@ -49,6 +49,7 @@ public interface Clusterer extends MOAObject, OptionHandler, AWTRenderable {
     ArrayList<double[]> collectLeafMedoids();
     KMedoids getKMedoids(int k);
     ArrayList<double[]> fakeMedoids(int k);
+    ArrayList<double[]> collectResidualPoints();
 
     double[] getVotesForInstance(Instance var1);
 

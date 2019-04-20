@@ -10,18 +10,22 @@ import java.util.ArrayList;
 
 public class PAM {
     public static void main(String[] args) {
-        int k = 10;
-        ArrayList<double[]> points = CSVReader.read("d:\\covertype.csv");
+        int k = 50;
+        int nPoints = 100000;
 
-        double[][] data = new double[points.size()][];
+        ArrayList<double[]> points_ = CSVReader.read("d:\\covertype.csv");
+        ArrayList<double[]> points = new ArrayList<>(points_.subList(0, nPoints));
+        double[][] data = new double[nPoints][points.get(0).length];
 
-        for (int i = 0; i < points.size(); i++) {
-            data[i] = points.get(i);
+        for (int i = 0; i < nPoints; i++) {
+            double[] point = points.get(i);
+            for (int j = 0; j < point.length; j++) {
+                data[i][j] = point[j];
+            }
         }
 
-        points = null;
-
         Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
+        System.out.println((double) Runtime.getRuntime().freeMemory() / (1000000000.0));
         System.out.println((double) Runtime.getRuntime().maxMemory() / (1000000000.0));
         KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
 

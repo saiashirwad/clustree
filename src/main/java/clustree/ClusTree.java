@@ -2,11 +2,7 @@ package clustree;
 
 import java.lang.reflect.Array;
 import java.time.Instant;
-import java.util.ArrayList;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 import com.clust4j.algo.KMeans;
 import com.clust4j.algo.KMeansParameters;
@@ -146,7 +142,7 @@ public class ClusTree extends AbstractClusterer{
         negLambda = (1.0 / (double) horizonOption.getValue())
                 * (Math.log(weightThreshold) / Math.log(2)) / 10;
 //        maxHeight = maxHeightOption.getValue();
-
+//        negLambda = 0;
         maxHeight = 10;
         numberDimensions = -1;
         root = null;
@@ -188,6 +184,7 @@ public class ClusTree extends AbstractClusterer{
 
         //TODO check if instance contains label
         if(root == null){
+
             numberDimensions = instance.numAttributes();
             root = new Node(numberDimensions, 0);
         }
@@ -897,20 +894,102 @@ public class ClusTree extends AbstractClusterer{
         return clusters;
     }
 
-    public ArrayList<double[]> collectLeafMedoids() {
-        ArrayList<double[]> medoids = new ArrayList<>();
+    public ArrayList<double[]> collectResidualPoints() {
         ArrayList<Node> leaves = collectLeafNodes(root);
+        ArrayList<double[]> points = new ArrayList<>();
 
         for (Node leaf: leaves) {
             try {
                 for (Entry e: leaf.getEntries()) {
-                    medoids.addAll(e.kmedoids);
+                    if (e.points.size() < 100) {
+                        points.addAll(e.getRawPoints());
+                    }
                 }
             }
             catch (Exception e) {}
         }
 
-        this.points = medoids;
+        return points;
+    }
+
+//    public ArrayList<double[]> collectLeafMedoids() {
+//        ArrayList<double[]> medoids = new ArrayList<>();
+//        ArrayList<Node> leaves = collectLeafNodes(root);
+//
+//        for (Node leaf: leaves) {
+//            try {
+//                for (Entry e: leaf.getEntries()) {
+//                    medoids.addAll(e.kmedoids);
+//                }
+//            }
+//            catch (Exception e) {}
+//        }
+//
+//        this.points = medoids;
+//        double[][] data = new double[points.size()][numberDimensions];
+//
+//        int i = 0;
+//        for (double[] point: points) {
+//            data[i] = point;
+//            i ++;
+//        }
+//        try {
+//            this.mat = new Array2DRowRealMatrix(data);
+//        }
+//        catch (Exception e) {}
+//
+//
+//        return medoids;
+//    }
+//
+//    public KMedoids getKMedoids(int k) {
+//
+//
+//        collectLeafMedoids();
+//
+//        KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
+//        return km;
+//
+//    }
+public ArrayList<double[]> collectLeafMedoids() {
+    ArrayList<double[]> medoids = new ArrayList<>();
+    ArrayList<Node> leaves = collectLeafNodes(root);
+
+    for (Node leaf: leaves) {
+        try {
+            for (Entry e: leaf.getEntries()) {
+                medoids.addAll(e.kmedoids);
+            }
+        }
+        catch (Exception e) {}
+    }
+
+    if (medoids.size() < 100) {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.isEmpty()) {
+            Node temp = queue.remove();
+
+            try {
+                for (Entry e: temp.getEntries()) {
+                    medoids.addAll(e.kmedoids);
+                }
+            }
+            catch (Exception e) {}
+        }
+    }
+
+
+    return medoids;
+}
+
+
+
+    public KMedoids getKMedoids(int k) {
+        ArrayList<double[]> points = collectLeafMedoids();
+
+//        System.out.println(points.size());
+
         double[][] data = new double[points.size()][numberDimensions];
 
         int i = 0;
@@ -919,19 +998,11 @@ public class ClusTree extends AbstractClusterer{
             i ++;
         }
 
-        this.mat = new Array2DRowRealMatrix(data);
-
-        return medoids;
-    }
-
-    public KMedoids getKMedoids(int k) {
-
-        if (this.mat == null) {
-            collectLeafMedoids();
-        }
+        Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
         KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
-        return km;
+        return  km;
     }
+
 
     public KMeans getKMeans(int k) {
         if (this.mat == null) {
