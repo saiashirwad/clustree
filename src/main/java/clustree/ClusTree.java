@@ -135,6 +135,14 @@ public class ClusTree extends AbstractClusterer{
 
     public int a = 10;
 
+    public int updatePoints;
+
+    public void setConfig(ExperimentConfig config) {
+        this.updatePoints = config.updatePoints;
+        this.maxHeight = maxHeight;
+
+    }
+
     @Override
     public void resetLearningImpl() {
 //        breadthFirstStrat = breadthFirstStrategyOption.isSet();
@@ -186,7 +194,7 @@ public class ClusTree extends AbstractClusterer{
         if(root == null){
 
             numberDimensions = instance.numAttributes();
-            root = new Node(numberDimensions, 0);
+            root = new Node(numberDimensions, 0, updatePoints);
         }
         else{
             if(numberDimensions!=instance.numAttributes())
@@ -232,7 +240,7 @@ public class ClusTree extends AbstractClusterer{
         }
         else{
             Entry rootEntry = new Entry(this.numberDimensions,
-                    root, timestamp, null, null);
+                    root, timestamp, null, null, updatePoints);
             ClusKernel carriedBuffer = new ClusKernel(this.numberDimensions);
             Entry toInsertHere = insert(newPoint, carriedBuffer, root, rootEntry,
                     budget, timestamp);
@@ -242,7 +250,7 @@ public class ClusTree extends AbstractClusterer{
                 this.height += this.height < this.maxHeight ? 1 : 0;
 
                 Node newRoot = new Node(this.numberDimensions,
-                        toInsertHere.getChild().getRawLevel() + 1);
+                        toInsertHere.getChild().getRawLevel() + 1, updatePoints);
                 newRoot.addEntry(rootEntry, timestamp);
                 newRoot.addEntry(toInsertHere, timestamp);
                 rootEntry.setNode(newRoot);
@@ -274,7 +282,7 @@ public class ClusTree extends AbstractClusterer{
         Entry irrelevantEntry = bestFit.getIrrelevantEntry(this.weightThreshold);
         int numFreeEntries = bestFit.numFreeEntries();
         Entry newEntry = new Entry(newPoint.getCenter().length,
-                newPoint, timestamp, parent, bestFit);
+                newPoint, timestamp, parent, bestFit, updatePoints);
         //if there is space, add it to the node ( doesn't ever occur, since nodes are created with 3 entries)
         if (numFreeEntries>0){
             bestFit.addEntry(newEntry, timestamp);
@@ -362,9 +370,9 @@ public class ClusTree extends AbstractClusterer{
                 this.numRootSplits++;
                 this.height += this.height < this.maxHeight ? 1 : 0;
                 Entry oldRootEntry = new Entry(this.numberDimensions,
-                        root, timestamp, null, null);
+                        root, timestamp, null, null, updatePoints);
                 Node newRoot = new Node(this.numberDimensions,
-                        this.height);
+                        this.height, updatePoints);
                 Entry newRootEntry = split(toInsert, root, oldRootEntry, timestamp);
                 newRoot.addEntry(oldRootEntry, timestamp);
                 newRoot.addEntry(newRootEntry, timestamp);
@@ -412,7 +420,7 @@ public class ClusTree extends AbstractClusterer{
         // Insert the buffer that we carry.
         if (!carriedBuffer.isEmpty()) {
             Entry bufferEntry = new Entry(this.numberDimensions,
-                    carriedBuffer, timestamp, parentEntry, currentNode);
+                    carriedBuffer, timestamp, parentEntry, currentNode, updatePoints);
 
             if (numFreeEntries <= 1) {
                 // Distance from buffer to entries.
@@ -533,7 +541,7 @@ public class ClusTree extends AbstractClusterer{
         if (currentNode.isLeaf()) {
             // At the end of the function the entry will be inserted.
             toInsertHere = new Entry(this.numberDimensions,
-                    pointToInsert, timestamp, parentEntry, currentNode);
+                    pointToInsert, timestamp, parentEntry, currentNode, updatePoints);
         } else {
 
             Entry bestEntry = currentNode.nearestEntry(pointToInsert);
@@ -708,7 +716,7 @@ public class ClusTree extends AbstractClusterer{
         allEntries[3] = newEntry;
 
         // Clear the given node, since we are going to refill it later.
-        node = new Node(this.numberDimensions, node.getRawLevel());
+        node = new Node(this.numberDimensions, node.getRawLevel(), updatePoints);
 
         // Calculate the distance of all the possible pairings, since we want
         // to do a (2,2) split.
@@ -724,7 +732,7 @@ public class ClusTree extends AbstractClusterer{
         // See which of the pairings is minimal and distribute the entries
         // accordingly.
         Node residualNode = new Node(this.numberDimensions,
-                node.getRawLevel());
+                node.getRawLevel(), updatePoints);
         if (select01 < select02) {
             if (select01 < select03) {//select01 smallest
                 node.addEntry(allEntries[0], timestamp);
@@ -763,7 +771,7 @@ public class ClusTree extends AbstractClusterer{
         //System.out.println(count);
         // Generate a new entry for the residual node.
         Entry residualEntry = new Entry(this.numberDimensions,
-                residualNode, timestamp, parentEntry, node);
+                residualNode, timestamp, parentEntry, node, updatePoints);
         count=0;
         for (Entry e: residualNode.getEntries()){
             e.setParentEntry(residualEntry);

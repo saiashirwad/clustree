@@ -16,6 +16,7 @@ public class Entry implements Serializable {
     public ClusKernel data;
 
     public int counter;
+    public int updatePoints;
     /**
      * The buffer of this entry. It can also be seen as the buffer of the child
      * node, it is here just to simplify the insertion recuersion.
@@ -140,7 +141,7 @@ public class Entry implements Serializable {
      * @param numberDimensions The dimensionality of the data point in tree
      * where this entry is used.
      */
-    public Entry(int numberDimensions) {
+    public Entry(int numberDimensions, int updatePoints) {
         this.data = new ClusKernel(numberDimensions);
         this.buffer = new ClusKernel(numberDimensions);
         this.child = null;
@@ -148,6 +149,7 @@ public class Entry implements Serializable {
         this.points = new LinkedList<ClusKernel>();
         this.points_ = new LinkedList<Tuple<ClusKernel, Instant>>();
         this.counter = 0;
+        this.updatePoints = updatePoints;
     }
 
     /**
@@ -161,8 +163,8 @@ public class Entry implements Serializable {
      * @see #data
      */
     protected Entry(int numberDimensions,
-                    Node node, long currentTime, Entry parentEntry, Node containerNode) {
-        this(numberDimensions);
+                    Node node, long currentTime, Entry parentEntry, Node containerNode, int updatePoints) {
+        this(numberDimensions, updatePoints);
         this.child = node;
         this.parentEntry = parentEntry;
         this.node = containerNode;
@@ -194,8 +196,8 @@ public class Entry implements Serializable {
      * @see
      * @see #data
      */
-    public Entry(int numberDimensions, ClusKernel cluster, long currentTime) {
-        this(numberDimensions);
+    public Entry(int numberDimensions, ClusKernel cluster, long currentTime, int updatePoints) {
+        this(numberDimensions, updatePoints);
         this.data.add(cluster);
         if (cluster.getTotalN() == 1.0) {
             this.addPoint(cluster);
@@ -211,8 +213,8 @@ public class Entry implements Serializable {
      * @param parentEntry
      * @param containerNode
      */
-    protected Entry(int numberDimensions, ClusKernel cluster, long currentTime, Entry parentEntry, Node containerNode) {
-        this(numberDimensions);
+    protected Entry(int numberDimensions, ClusKernel cluster, long currentTime, Entry parentEntry, Node containerNode, int updatePoints) {
+        this(numberDimensions, updatePoints);
         this.parentEntry = parentEntry;
         this.data.add(cluster);
         try {
@@ -241,6 +243,7 @@ public class Entry implements Serializable {
         this.child = other.child;
         this.points = other.points;
         this.points_ = other.points_;
+        this.updatePoints = other.updatePoints;
         if (other.getChild()!=null)
             for (Entry e : other.getChild().getEntries()){
                 e.setParentEntry(this);

@@ -1,6 +1,0 @@
-k = 10
-absolute error = 4.7446344359449446E8
-k = 25
-absolute error = 3.461262042007575E8
-k = 50
-absolute error = 2.9222526587765276E8

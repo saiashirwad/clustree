@@ -14,6 +14,7 @@ public class Node implements Serializable {
     private static int count = 0;
     private int id = 0;
 
+
     public int getId() {
         return id;
     }
@@ -52,14 +53,14 @@ public class Node implements Serializable {
      * manipulates.
      * @param level The INVERSE level at which this node hangs.
      */
-    public Node(int numberDimensions, int level) {
+    public Node(int numberDimensions, int level, int updatePoints) {
         this.level = level;
 
         this.entries = new Entry[NUMBER_ENTRIES];
         // Generate all entries when we generate a Node.
         // That no entry can be null makes it much easier to handle.
         for (int i = 0; i < NUMBER_ENTRIES; i++) {
-            entries[i] = new Entry(numberDimensions);
+            entries[i] = new Entry(numberDimensions, updatePoints);
             entries[i].setNode(this);
         }
 
@@ -75,7 +76,7 @@ public class Node implements Serializable {
      * @param fakeRoot A parameter the says if the node is to be fake or not.
      */
     protected Node(int numberDimensions, int numberClasses, int level,
-                   boolean fakeRoot) {
+                   boolean fakeRoot, int updatePoints) {
 
         this.level = level;
 
@@ -83,7 +84,7 @@ public class Node implements Serializable {
         // Generate all entries when we generate a Node.
         // That no entry can be null makes it much easier to handle.
         for (int i = 0; i < NUMBER_ENTRIES; i++) {
-            entries[i] = new Entry(numberDimensions);
+            entries[i] = new Entry(numberDimensions, updatePoints);
         }
     }
 
@@ -93,9 +94,8 @@ public class Node implements Serializable {
      * @param level
      * @param argEntries
      */
-    public Node(int numberDimensions, int level, Entry[] argEntries) {
+    public Node(int numberDimensions, int level, Entry[] argEntries, int updatePoints) {
         this.level = level;
-
         this.entries = new Entry[NUMBER_ENTRIES];
         // Generate all entries when we generate a Node.
         // That no entry can be null makes it much easier to handle.

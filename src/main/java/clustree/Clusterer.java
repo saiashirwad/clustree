@@ -38,6 +38,7 @@ public interface Clusterer extends MOAObject, OptionHandler, AWTRenderable {
 
     void resetLearning();
 
+    void setConfig(ExperimentConfig config);
     long getTimeStamp();
 
     void trainOnInstance(Instance var1);

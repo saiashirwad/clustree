@@ -1,108 +1,33 @@
 package clustree;
 
-import moa.cluster.Cluster;
-import moa.cluster.Clustering;
-import moa.core.InstanceExample;
-import com.yahoo.labs.samoa.instances.Instance;
-import org.jfree.data.io.CSV;
-import org.kramerlab.bmad.general.Tuple;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 
 public class Dummy {
-
-    public static Queue<Instance> q = new LinkedList<Instance>();
-    public static Clusterer learner = new ClusTree();
-    public static int i = 200000;
-
-    ArrayList<double[]> points = CSVReader.read("d:\\backup.csv");
-
     public static void main(String[] args) {
 
-        SimpleCSVStream stream = new SimpleCSVStream();
-        stream.csvFileOption.setValue("d:\\covertype.csv");
-        stream.prepareForUse();
+        ArrayList<ExperimentConfig> experimentConfigs = new ArrayList<>();
 
-        learner.resetLearning();
+        int[] kVals = new int[]{10, 25, 50};
+        String dataPath = "covtype.csv";
+        String resultPath = "results/";
+        int nPoints = 580000;
 
-        learner.setModelContext(stream.getHeader());
-        learner.prepareForUse();
+        // Use ExperimentConfigBuilder the like I've done below. Refer to the builder class to see all parameters
 
-        Instant begin = Instant.now();
+        // Tree with maxHeight 8
+        experimentConfigs.add(
+                new ExperimentConfigBuilder().maxHeight(8).buildExperimentConfig());
 
-        Thread t = new Thread(new InputHandler());
-        t.start();
+        // Tree with maxHeight 12 where PAM is applied on Entries every 100 new points
+        experimentConfigs.add(
+                new ExperimentConfigBuilder().maxHeight(12).updatePoints(100).buildExperimentConfig()
+        );
 
-        int speedPlaceholder = 0;
-        int THRESHOLD = 30000;
-
-        StreamHandler streamHandler = StreamHandler.UNIT_HANDLER;
-
-        while (stream.hasMoreInstances() && i > 0) {
-//            InstanceExample trainInst = stream.nextInstance();
-//            Instance inst = trainInst.instance;
-
-            if (speedPlaceholder < THRESHOLD) {
-                if (streamHandler != StreamHandler.UNIT_HANDLER) {
-                    streamHandler = StreamHandler.UNIT_HANDLER;
-
-                    try {
-                        t.join();
-                    }
-                    catch (Exception e) {}
-
-                    t = new Thread(new InputHandler());
-                    t.start();
-                }
-            }
-            else {
-                if (streamHandler != StreamHandler.AGGREGATE_HANDLER) {
-                    streamHandler = StreamHandler.AGGREGATE_HANDLER;
-
-                    try {
-                        t.join();
-                    }
-                    catch (Exception e) {}
-
-                    t = new Thread(new AggregationHandler());
-                    t.start();
-                }
-            }
-
-            int bufSize = ThreadLocalRandom.current().nextInt(1, 10);
-            ArrayList<Instance> instances = new ArrayList<>();
-            for (int i = 0; i < bufSize; i++) {
-                if (stream.hasMoreInstances()) {
-                    instances.add(stream.nextInstance().instance);
-                }
-            }
-
-            q.addAll(instances);
-//            learner.trainOnInstance(inst);
-            i -= bufSize;
+        for (ExperimentConfig config: experimentConfigs) {
+            Experiment experiment = new Experiment(config);
+            experiment.run();
         }
-
-        try {
-            t.join();
-        }
-        catch (Exception e) {}
-
-        Node root = learner.getRoot();
-        System.out.println("dunzo");
-
-        Instant end = Instant.now();
-        System.out.println(Duration.between(end, begin));
-
-
-
     }
 
 }
-
-//enum StreamHandler {
-//    UNIT_HANDLER,
-//    AGGREGATE_HANDLER
-//}
