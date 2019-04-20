@@ -3,6 +3,7 @@ package clustree;
 import com.clust4j.algo.KMedoids;
 import com.yahoo.labs.samoa.instances.Instance;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -16,6 +17,9 @@ public class Experiment {
 
         this.config = config;
         this.reports = new ArrayList<>();
+        ThreadConfig.setK(config.threadK);
+        EntryConfig.setQueueSize(config.queueSize);
+        EntryConfig.setUpdatePoints(config.updatePoints);
     }
 
     public void run() {
@@ -42,6 +46,7 @@ public class Experiment {
             learner.trainOnInstance(inst);
             i--;
         }
+
 
         performExperiment();
         try {

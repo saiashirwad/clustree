@@ -12,11 +12,13 @@ public class ExperimentConfigBuilder {
     private int _maxHeight = 10;
     private int _updatePoints = 50;
     private int _numIters = 1;
+    private int _queueSize = 700;
+    private int _threadK = 30;
 
     public ExperimentConfigBuilder() {}
 
     public ExperimentConfig buildExperimentConfig() {
-        return new ExperimentConfig(this._kVals, this._dataPath, this._resultPath, this._nPoints, this._maxHeight, this._updatePoints, this._windowSize,this._numIters);
+        return new ExperimentConfig(this._kVals, this._dataPath, this._resultPath, this._nPoints, this._maxHeight, this._updatePoints, this._windowSize,this._numIters, this._queueSize, this._threadK);
     }
 
     public ExperimentConfigBuilder kVals(int[] _kVals) {
@@ -56,6 +58,16 @@ public class ExperimentConfigBuilder {
 
     public ExperimentConfigBuilder numIters(int _numIters) {
         this._numIters = _numIters;
+        return this;
+    }
+
+    public ExperimentConfigBuilder queueSize(int _queueSize) {
+        this._queueSize = _queueSize;
+        return this;
+    }
+
+    public ExperimentConfigBuilder threadK(int _threadK) {
+        this._threadK = _threadK;
         return this;
     }
 

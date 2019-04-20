@@ -24,6 +24,7 @@ public class Entry implements Serializable {
     private ClusKernel buffer;
 
     public Queue<ClusKernel> points;
+    private int queueSize;
 
     public ArrayList<double[]> getRawPoints() {
         ArrayList<double[]> points = new ArrayList<>();
@@ -36,7 +37,6 @@ public class Entry implements Serializable {
 
     public Queue<Tuple<ClusKernel, Instant>> points_;
 
-//    public ArrayList<ArrayList<Double>> kmedoids;
     public ArrayList<double[]> kmedoids;
 
     public boolean isUsed = false;
@@ -47,7 +47,7 @@ public class Entry implements Serializable {
 
     public synchronized void addPoint(ClusKernel ck) {
 
-        if (points.size() < 700) {
+        if (points.size() < queueSize) {
             points.add(ck);
         }
         else {
@@ -55,7 +55,7 @@ public class Entry implements Serializable {
             points.add(ck);
         }
 
-        if (counter >= 50) {
+        if (counter >= updatePoints) {
             if (this.node.isLeaf()) {
 
                 Thread t = new Thread(new PAMThread(this.points, this));
@@ -70,22 +70,22 @@ public class Entry implements Serializable {
         }
     }
 
-    public void addPoint_(ClusKernel ck) {
-        if (points_.size() < 700) {
-            points_.add(new Tuple<>(ck, Instant.now()));
-        }
-        else {
-            points_.remove();
-            points_.add(new Tuple<>(ck, Instant.now()));
-        }
-
-        // Also add the time-based constraint
-        if (counter >= 500) {
-            counter = 0;
-
-            // Call upon thread to perform PAM
-        }
-    }
+//    public void addPoint_(ClusKernel ck) {
+//        if (points_.size() < 700) {
+//            points_.add(new Tuple<>(ck, Instant.now()));
+//        }
+//        else {
+//            points_.remove();
+//            points_.add(new Tuple<>(ck, Instant.now()));
+//        }
+//
+//        // Also add the time-based constraint
+//        if (counter >= 500) {
+//            counter = 0;
+//
+//            // Call upon thread to perform PAM
+//        }
+//    }
 
 
     public Queue<Tuple<ClusKernel, Instant>> getPoints_() {
@@ -137,7 +137,8 @@ public class Entry implements Serializable {
         this.points = new LinkedList<ClusKernel>();
         this.points_ = new LinkedList<Tuple<ClusKernel, Instant>>();
         this.counter = 0;
-        this.updatePoints = updatePoints;
+        this.updatePoints = EntryConfig.getUpdatePoints();
+        this.queueSize = EntryConfig.getQueueSize();
     }
 
     /**
@@ -232,6 +233,7 @@ public class Entry implements Serializable {
         this.points = other.points;
         this.points_ = other.points_;
         this.updatePoints = other.updatePoints;
+        this.queueSize = other.queueSize;
         if (other.getChild()!=null)
             for (Entry e : other.getChild().getEntries()){
                 e.setParentEntry(this);
