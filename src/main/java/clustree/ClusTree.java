@@ -986,8 +986,6 @@ public ArrayList<double[]> collectLeafMedoids() {
             catch (Exception e) {}
         }
     }
-
-
     return medoids;
 }
 

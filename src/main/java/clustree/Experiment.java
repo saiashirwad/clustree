@@ -44,8 +44,6 @@ public class Experiment {
         }
 
         performExperiment();
-
-        // Join PAMService thread instead of this once that is done
         try {
             Thread.sleep(1000);
         }
@@ -55,17 +53,18 @@ public class Experiment {
     }
 
     private void performExperiment() {
-        for (int k: config.kVals) {
-            Report report = new Report(k);
-            KMedoids km = learner.getKMedoids(k);
-            ArrayList<double[]> kmedoids = km.getCentroids();
+        for (int i = 0; i < config.numIters; i++) {
+            for (int k: config.kVals) {
+                Report report = new Report(k);
+                KMedoids km = learner.getKMedoids(k);
+                ArrayList<double[]> kmedoids = km.getCentroids();
 
-            report.setAbsoluteError(Metrics.absoluteError(kmedoids, config.dataPath));
-            // add other metrics
+                report.setAbsoluteError(Metrics.absoluteError(kmedoids, config.dataPath));
+                // add other metrics
 
-            this.reports.add(report);
+                this.reports.add(report);
+            }
         }
-
     }
 
     public void printReports() {
@@ -73,6 +72,8 @@ public class Experiment {
         for (Report report: this.reports) {
             System.out.println(report.toString());
         }
+
+        System.out.println();
     }
 
 

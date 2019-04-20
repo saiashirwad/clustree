@@ -11,11 +11,12 @@ public class ExperimentConfigBuilder {
     private int _windowSize = 350000;
     private int _maxHeight = 10;
     private int _updatePoints = 50;
+    private int _numIters = 1;
 
     public ExperimentConfigBuilder() {}
 
     public ExperimentConfig buildExperimentConfig() {
-        return new ExperimentConfig(this._kVals, this._dataPath, this._resultPath, this._nPoints, this._maxHeight, this._updatePoints, this._windowSize);
+        return new ExperimentConfig(this._kVals, this._dataPath, this._resultPath, this._nPoints, this._maxHeight, this._updatePoints, this._windowSize,this._numIters);
     }
 
     public ExperimentConfigBuilder kVals(int[] _kVals) {
@@ -50,6 +51,11 @@ public class ExperimentConfigBuilder {
 
     public ExperimentConfigBuilder updatePoints(int _updatePoints) {
         this._updatePoints = _updatePoints;
+        return this;
+    }
+
+    public ExperimentConfigBuilder numIters(int _numIters) {
+        this._numIters = _numIters;
         return this;
     }
 

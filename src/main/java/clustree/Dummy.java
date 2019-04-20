@@ -13,20 +13,20 @@ public class Dummy {
         String resultPath = "results/";
         int nPoints = 580000;
 
-
-        // Use ExperimentConfigBuilder the like I've done below. Refer to the builder class to see all parameters
-
-        // Tree with maxHeight 8
         experimentConfigs.add(
-                new ExperimentConfigBuilder().maxHeight(8).buildExperimentConfig());
-
-        // Tree with maxHeight 12 where PAM is applied on Entries every 100 new points
-        experimentConfigs.add(
-                new ExperimentConfigBuilder().maxHeight(12).updatePoints(100).buildExperimentConfig()
+                new ExperimentConfigBuilder().maxHeight(10).updatePoints(200).numIters(3).buildExperimentConfig()
         );
 
         experimentConfigs.add(
-                new ExperimentConfigBuilder().updatePoints(50).buildExperimentConfig()
+                new ExperimentConfigBuilder().maxHeight(10).updatePoints(150).numIters(3).buildExperimentConfig()
+        );
+
+        experimentConfigs.add(
+                new ExperimentConfigBuilder().maxHeight(10).updatePoints(250).numIters(3).buildExperimentConfig()
+        );
+
+        experimentConfigs.add(
+                new ExperimentConfigBuilder().maxHeight(10).updatePoints(300).numIters(3).buildExperimentConfig()
         );
 
         for (ExperimentConfig config: experimentConfigs) {

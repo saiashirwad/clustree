@@ -13,14 +13,16 @@ public class ExperimentConfig implements Serializable {
     public int windowSize;
     public int maxHeight;
     public int updatePoints;
+    public int numIters;
 
-    public ExperimentConfig(int[] kVals, String dataPath, String resultPath, int nPoints, int maxHeight, int updatePoints, int windowSize) {
+    public ExperimentConfig(int[] kVals, String dataPath, String resultPath, int nPoints, int maxHeight, int updatePoints, int windowSize, int numIters) {
         this.kVals = kVals;
         this.dataPath = dataPath;
         this.resultPath = resultPath;
         this.nPoints = nPoints;
         this.maxHeight = maxHeight;
         this.updatePoints = updatePoints;
+        this.numIters = numIters;
     }
 
     @Override
@@ -33,6 +35,7 @@ public class ExperimentConfig implements Serializable {
                 ", windowSize=" + windowSize +
                 ", maxHeight=" + maxHeight +
                 ", updatePoints=" + updatePoints +
+                ", numIters=" + numIters +
                 '}';
     }
 }

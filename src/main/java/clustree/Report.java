@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.time.Duration;
 
 
 /**
@@ -14,6 +15,12 @@ public class Report implements Serializable {
     private int k;
 
     private double absoluteError;
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    private Duration duration;
 
     public void setAbsoluteError(double absoluteError) {
         this.absoluteError = absoluteError;
