@@ -31,7 +31,7 @@ public class PAM {
 
         ArrayList<double[]> medoids = km.getCentroids();
 
-        double absoluteError = new Metrics().absoluteError(medoids, points);
+        double absoluteError = new Metrics().absoluteError(medoids);
         System.out.println(absoluteError);
 
     }

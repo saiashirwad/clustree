@@ -24,7 +24,7 @@ public class PAMThread implements Runnable {
         try {
 //            int k = (int) (0.4 * (double)this.points.size());
 
-            int k = 20;
+            int k = 15;
 
             double[][] data = new double[points.size()][points.peek().LS.length];
 
@@ -53,7 +53,7 @@ public class PAMThread implements Runnable {
             this.entry.setKmedoids(centroids);
             this.entry.isUsed = false;
 
-//            System.out.println("Thread " + this.id + "done");
+            System.out.println("Thread " + this.id + "done");
         }
         catch (Exception e) {
 //            System.out.println(e);

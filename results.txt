@@ -1,24 +1,6 @@
-k = 5
-absolute error = 706842.523351275
-silhouette coeff = 0.4091185483805392
-
-k = 15
-absolute error = 610644.2740125597
-silhouette coeff = 0.2592108192217224
-
+k = 10
+absolute error = 4.7446344359449446E8
 k = 25
-absolute error = 538588.1918766395
-silhouette coeff = 0.38199503695515047
-
-k = 35
-absolute error = 481449.0226827785
-silhouette coeff = 0.38174200837404415
-
-k = 45
-absolute error = 439279.52559732355
-silhouette coeff = 0.388419557973501
-
+absolute error = 3.461262042007575E8
 k = 50
-absolute error = 441374.15586321667
-silhouette coeff = 0.41625657441099806
-
+absolute error = 2.9222526587765276E8

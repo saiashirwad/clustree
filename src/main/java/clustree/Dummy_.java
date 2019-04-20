@@ -20,18 +20,18 @@ public class Dummy_ {
 
     public static Queue<Instance> q = new LinkedList<Instance>();
     public static Clusterer learner = new ClusTree();
-    public static int i = 500000;
+    public static int i = 580000;
 
 
     public static void main(String[] args) throws IOException {
 
 
-        ArrayList<double[]> points_ = CSVReader.read("d:\\backup.csv");
+        ArrayList<double[]> points_ = CSVReader.read("d:\\covtype.csv");
         ArrayList<double[]> points = new ArrayList<>(points_.subList(0, i));
 
 
         SimpleCSVStream stream = new SimpleCSVStream();
-        stream.csvFileOption.setValue("d:\\backup.csv");
+        stream.csvFileOption.setValue("d:\\covtype.csv");
         stream.prepareForUse();
 
         double[] point = points.get(0);
@@ -61,7 +61,7 @@ public class Dummy_ {
 
         System.out.println(learner.collectResidualPoints().size());
 
-        int[] ks = new int[]{5,15, 25, 35, 45, 50};
+        int[] ks = new int[]{10, 25, 50};
 
         FileWriter fileWriter = new FileWriter("./results.txt");
         PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -70,19 +70,11 @@ public class Dummy_ {
             KMedoids km = learner.getKMedoids(k);
 
             ArrayList<double[]> kmedoids = km.getCentroids();
-            for (double[] medoid: kmedoids) {
-                for (double i: medoid) {
-                    System.out.print(i);
-                }
-                System.out.println("\n\n");
-            }
-            System.out.println("");
 
-            double absoluteError = Metrics.absoluteError(kmedoids, points);
-            double silhouette = km.silhouetteScore();
+            double absoluteError = Metrics.absoluteError(kmedoids);
 
-            System.out.println("k = " + k + "\nabsolute error = " + absoluteError + "\nsilhouette coeff = " + silhouette + "\n");
-            printWriter.println("k = " + k + "\nabsolute error = " + absoluteError + "\nsilhouette coeff = " + silhouette + "\n");
+            System.out.println("k = " + k + "\nabsolute error = " + absoluteError);
+            printWriter.println("k = " + k + "\nabsolute error = " + absoluteError);
 
         }
 
