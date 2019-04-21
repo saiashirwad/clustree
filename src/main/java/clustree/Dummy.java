@@ -27,6 +27,7 @@ public class Dummy {
         for (ExperimentConfig config: experimentConfigs) {
             Experiment experiment = new Experiment(config);
             experiment.run();
+            experiment.printReports();
         }
     }
 

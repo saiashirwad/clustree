@@ -14,6 +14,7 @@ public class Experiment {
     public Experiment(ExperimentConfig config) {
 
         this.config = config;
+        this.reports = new ArrayList<>();
     }
 
     public void run() {
