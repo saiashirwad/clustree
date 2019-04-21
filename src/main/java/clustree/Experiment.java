@@ -68,6 +68,7 @@ public class Experiment {
     }
 
     public void printReports() {
+        System.out.println(config.toString());
         for (Report report: this.reports) {
             System.out.println(report.toString());
         }

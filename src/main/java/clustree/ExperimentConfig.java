@@ -3,6 +3,7 @@ package clustree;
 import scala.util.parsing.combinator.testing.Str;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class ExperimentConfig implements Serializable {
     public int[] kVals;
@@ -20,5 +21,18 @@ public class ExperimentConfig implements Serializable {
         this.nPoints = nPoints;
         this.maxHeight = maxHeight;
         this.updatePoints = updatePoints;
+    }
+
+    @Override
+    public String toString() {
+        return "ExperimentConfig{" +
+                "kVals=" + Arrays.toString(kVals) +
+                ", dataPath='" + dataPath + '\'' +
+                ", resultPath='" + resultPath + '\'' +
+                ", nPoints=" + nPoints +
+                ", windowSize=" + windowSize +
+                ", maxHeight=" + maxHeight +
+                ", updatePoints=" + updatePoints +
+                '}';
     }
 }

@@ -4,7 +4,6 @@ import com.clust4j.algo.KMedoids;
 import com.clust4j.algo.KMedoidsParameters;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -16,7 +15,6 @@ public class PAMThread implements Runnable {
     public PAMThread(Queue<ClusKernel> points, Entry entry) {
         this.entry = entry;
         this.points = points;
-        this.id = Counter.getInstance().val++;
     }
 
     public void run() {
@@ -42,8 +40,6 @@ public class PAMThread implements Runnable {
             Array2DRowRealMatrix mat = new Array2DRowRealMatrix(data);
             KMedoids km = new KMedoidsParameters(k).fitNewModel(mat);
             final int[] results = km.getLabels();
-//            System.out.println(results.toString());
-
 
             ArrayList<double[]> centroids = km.getCentroids();
 
@@ -51,12 +47,8 @@ public class PAMThread implements Runnable {
             // I do not know if this is the best way to do this.
             // This stores a reference to the original ClusKernel and then updates it's kmedoids
             this.entry.setKmedoids(centroids);
-            this.entry.isUsed = false;
-
-            System.out.println("Thread " + this.id + "done");
         }
         catch (Exception e) {
-//            System.out.println(e);
         }
 
     }

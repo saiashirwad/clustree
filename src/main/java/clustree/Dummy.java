@@ -24,6 +24,10 @@ public class Dummy {
                 new ExperimentConfigBuilder().maxHeight(12).updatePoints(100).buildExperimentConfig()
         );
 
+        experimentConfigs.add(
+                new ExperimentConfigBuilder().updatePoints(50).buildExperimentConfig()
+        );
+
         for (ExperimentConfig config: experimentConfigs) {
             Experiment experiment = new Experiment(config);
             experiment.run();

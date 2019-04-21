@@ -1,7 +1,6 @@
 package clustree;
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.Queue;
+
 
 public class Node implements Serializable {
 
