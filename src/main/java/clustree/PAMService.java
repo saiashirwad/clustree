@@ -11,18 +11,22 @@ public class PAMService implements Runnable {
     private ExecutorService pool = Executors.newFixedThreadPool(MAX_T);
     public boolean shutdown = false;
 
-    private PAMService instance = null;
+    private static PAMService instance = null;
 
     Queue<Runnable> tasks = new LinkedList<>();
 
     private PAMService() {}
 
-    public PAMService getInstance() {
-        if (this.instance == null) {
-            this.instance = new PAMService();
+    public static void init() {
+        PAMService.instance = new PAMService();
+    }
+
+    public synchronized static PAMService getInstance() {
+        if (PAMService.instance == null) {
+            PAMService.instance = new PAMService();
         }
 
-        return this;
+        return PAMService.instance;
     }
 
 
@@ -35,6 +39,7 @@ public class PAMService implements Runnable {
             try {
                 if (!tasks.isEmpty()) {
                     pool.execute(tasks.remove());
+                    System.out.println("Task added");
                 }
             }
             catch (Exception e) {}
@@ -43,6 +48,7 @@ public class PAMService implements Runnable {
     }
 
     public void shutdown() {
+        this.pool.shutdown();
         this.shutdown = true;
     }
 }

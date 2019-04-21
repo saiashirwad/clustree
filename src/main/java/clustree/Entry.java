@@ -46,6 +46,7 @@ public class Entry implements Serializable {
     }
 
     public synchronized void addPoint(ClusKernel ck) {
+
         if (points.size() < 700) {
             points.add(ck);
         }
@@ -56,26 +57,13 @@ public class Entry implements Serializable {
 
         if (counter >= 50) {
             if (this.node.isLeaf()) {
-                // apply pam
 
-                if (isUsed) {
+                Thread t = new Thread(new PAMThread(this.points, this));
+                t.start();
 
-                }
-                else {
-                    Thread t = new Thread(new PAMThread(this.points, this));
-                    t.start();
-
-//                    try {
-//                        t.join();
-//                    }
-//                    catch (Exception e) {}
-
-                }
-
-
+//                PAMService.getInstance().addTask(t);
             }
             counter = 0;
-
         }
         else {
             counter ++;

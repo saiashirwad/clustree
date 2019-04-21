@@ -13,6 +13,7 @@ public class Dummy {
         String resultPath = "results/";
         int nPoints = 580000;
 
+
         // Use ExperimentConfigBuilder the like I've done below. Refer to the builder class to see all parameters
 
         // Tree with maxHeight 8

@@ -11,6 +11,7 @@ public class Experiment {
     private ArrayList<Report> reports;
     public Clusterer learner = new ClusTree();
 
+
     public Experiment(ExperimentConfig config) {
 
         this.config = config;
@@ -18,6 +19,7 @@ public class Experiment {
     }
 
     public void run() {
+//        PAMService.init();
         // may not work out so well with the InputHandler thread
         int i = config.nPoints;
 
@@ -48,7 +50,6 @@ public class Experiment {
             Thread.sleep(1000);
         }
         catch (Exception e) {}
-
 
 
     }
